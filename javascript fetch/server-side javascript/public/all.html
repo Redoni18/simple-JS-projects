@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        
+        
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>Second page</h1>
+        <a href="./index.html">Go to first page to enter data</a>
+
+
+        <script>
+            let latitude, longitude;
+            
+            async function getData(){
+                const response = await fetch('/api')
+                const savedData = await response.json()
+                console.log(savedData)
+
+                for(item of savedData){
+                    const root = document.createElement('p')
+                    const mood = document.createElement('div')
+                    const geo = document.createElement('div')
+                    const date = document.createElement('div')
+                    const image = document.createElement('img')
+                    const lineBreak = document.createElement('hr')
+                    const dateString = new Date(item.timestamp).toLocaleDateString();
+                    
+
+                    mood.textContent = `mood: ${item.mood}`
+                    geo.textContent = `coordinates: ${item.lat}, ${item.lon}`
+                    date.textContent = `Date: ${dateString}`
+                    image.src = item.image64
+
+                    root.append(mood, geo, date, image)
+                    document.body.append(root, lineBreak)
+                    
+                    latitude = item.lat;
+                    longitude = item.lon;
+                    console.log(latitude)
+                }
+
+                // const key = '9fc29ed80e968c68a869ecd2b8460c07'
+                // const api_url = `api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=9fc29ed80e968c68a869ecd2b8460c07`
+                // const secondResponse = await fetch(api_url)
+                // const weatherData = await secondResponse.json()
+                // console.log(weatherData)
+            }
+
+            getData()
+            
+            // async function getWeather(){
+            //     const response = await fetch(api_url)
+            //     const weatherData = await response.json()
+            //     console.log(weatherData)
+            // }
+
+            // getWeather()
+        </script>
+    </body>
+</html>

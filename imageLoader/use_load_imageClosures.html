@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        <script type="module">
+            import loadImage from './modules/load_images_with_closures.js';
+            const displayImage = (src) => {
+                let image = document.createElement('img');
+                image.setAttribute('src', src);
+                image.setAttribute('height', '120px');
+                document.body.appendChild(image);
+            }
+
+            loadImage('vue1.png', (err, img1) => {
+                if(err) document.write(err);
+                displayImage(img1.src);
+
+                loadImage('vue2.jpeg', (err, img2) => {
+                    if(err) document.write(err);
+                    displayImage(img2.src);
+
+                    loadImage('vue3.jpeg', (err, img3) => {
+                        if(err) document.write(err);
+                        displayImage(img3.src);
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

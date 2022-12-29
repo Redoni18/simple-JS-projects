@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <!-- <div class="nomics-ticker-widget" data-name="Dogecoin" data-base="DOGE" data-quote="USD"></div><script src="https://widget.nomics.com/embed.js"></script>
+        <canvas id="chart" width="450" height="200">
+
+        </canvas> -->
+        <div class="container col-md-6 mt-4 mb-3">
+            <h2>Dogecoin Prices</h2>
+            <div class="card bg-danger text-white">
+              <div id="lowCard" class="card-body">Lowest Price: 
+              </div>
+            </div>
+            <br>
+            <div class="card bg-primary text-white">
+              <div id="highCard" class="card-body">Highest Price: 
+              </div>
+            </div>
+            <br>
+            <div class="card bg-success text-white">
+              <div id="latestCard" class="card-body">Latest Price: 
+              </div>
+            </div>
+            <br>
+          </div>
+        <script>
+            let first_time = true
+            const api_url = "https://nitinr-cors.herokuapp.com/https://api.wazirx.com/api/v2/tickers/dogeusdt"
+            // const xs = []
+            // const ys = []
+            // async function chartIt(){
+            //     const finalData = await getPrice()
+            //     const ctx = document.getElementById('chart').getContext('2d');
+            //     const myChart = new Chart(ctx, {
+            //         type: 'line',
+            //         data: {
+            //             labels: data.xs,
+            //             datasets: [{
+            //                 label: 'Combined Land-Surface Air and Sea-Surface Water Temperature in C°',
+            //                 data: data.ys,
+            //                 backgroundColor: [
+            //                     'rgba(255, 99, 132, 0.2)',
+            //                     'rgba(54, 162, 235, 0.2)',
+            //                     'rgba(255, 206, 86, 0.2)',
+            //                     'rgba(75, 192, 192, 0.2)',
+            //                     'rgba(153, 102, 255, 0.2)',
+            //                     'rgba(255, 159, 64, 0.2)'
+            //                 ],
+            //                 borderColor: [
+            //                     'rgba(255, 99, 132, 1)',
+            //                     'rgba(54, 162, 235, 1)',
+            //                     'rgba(255, 206, 86, 1)',
+            //                     'rgba(75, 192, 192, 1)',
+            //                     'rgba(153, 102, 255, 1)',
+            //                     'rgba(255, 159, 64, 1)'
+            //                 ],
+            //                 borderWidth: 1
+            //             }]
+            //         },
+            //         options: {
+            //             scales: {
+            //                 y: {
+            //                     ticks: {
+            //                         // Include a dollar sign in the ticks
+            //                         callback: function(value, index, values) {
+            //                             return value + '°';
+            //                         }
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     });
+            // }
+
+            async function getPrice(){
+                const response = await fetch(api_url);
+                const price = await response.json()
+                const data = price.ticker
+                console.log(data)
+
+                const {low, high, last} = data
+
+                document.getElementById('lowCard').innerHTML = 'Lowest Price: ' + low
+                document.getElementById('highCard').innerHTML = 'Highest Price: ' + high
+                document.getElementById('latestCard').innerHTML = 'Latest Price: ' + last
+            }
+            if(first_time){
+              getPrice()
+              first_time = false;
+            }
+            if(!first_time){
+              setInterval(getPrice, 10000);
+            }
+        </script>
+
+
+    </body>
+</html>

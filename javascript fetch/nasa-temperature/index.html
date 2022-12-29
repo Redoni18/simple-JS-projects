@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+    </head>
+    <body>
+        <canvas id="chart" width="450" height="200">
+
+        </canvas>
+        <!-- <ul id='lista'>
+        </ul> -->
+        
+        <script>
+            const xs = [];
+            const ys = []
+            chartIt()
+            getData()
+            async function chartIt(){
+                const data = await getData()
+                const ctx = document.getElementById('chart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.xs,
+                        datasets: [{
+                            label: 'Combined Land-Surface Air and Sea-Surface Water Temperature in C°',
+                            data: data.ys,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                ticks: {
+                                    // Include a dollar sign in the ticks
+                                    callback: function(value, index, values) {
+                                        return value + '°';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+
+            //const ul = document.getElementById('lista')
+
+            
+            async function getData(){
+                const response = await fetch('ZonAnn.Ts+dSST.csv')
+                const data = await response.text();
+
+                const table = data.split('\n').slice(1)
+                table.forEach(row => {
+                    const columns = row.split(',')
+                    const year = columns[0]
+                    xs.push(year)
+                    const temp = columns[1]
+                    ys.push(parseFloat(temp) + 14)
+                    console.log(year, temp)
+                    
+                    // const li = document.createElement('li');
+                    // ul.appendChild(li);
+                    // li.innerHTML=li.innerHTML + year + temp
+                })
+                return {xs, ys}
+            }
+        </script>
+    </body>
+</html>
